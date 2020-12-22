@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: prom-eureka-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+server:
+  port: ${PORT:2011}
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    server:
+      waitTimeInMsWhenSyncEmpty: 0
+    service-url:
+      defaultZone: http://localhost:${PORT:2011}/eureka
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000 #milliseconds
+        readTimeout: 10000
