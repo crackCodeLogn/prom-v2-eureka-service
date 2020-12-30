@@ -104,7 +104,7 @@
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>${heroku-maven.version}</version>
                 <configuration>
-                    <appName>${artifactId}</appName>
+                    <appName>${project.artifactId}</appName>
                 </configuration>
             </plugin>
         </plugins>
