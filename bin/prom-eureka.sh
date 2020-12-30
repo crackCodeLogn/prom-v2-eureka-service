@@ -1,4 +1,4 @@
-APP_NAME="prom-eureka-service"
+APP_NAME="prom-v2-eureka-service"
 APP_VERSION="0.0.1-SNAPSHOT"
 JAVA_PARAM="-Xmx251m"
 
