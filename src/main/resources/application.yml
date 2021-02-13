@@ -6,6 +6,11 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  security:
+    user:
+      name: itachi
+      password: default
+
 server:
   port: ${PORT:2011} #Heroku will supply it's own value here
 
@@ -18,9 +23,11 @@ eureka:
     server:
       waitTimeInMsWhenSyncEmpty: 0
     service-url:
-      defaultZone: https://${eureka.instance.hostname}:${server.port}/eureka
+      defaultZone: https://${eureka.user}:${eureka.password}@${eureka.instance.hostname}:${server.port}/eureka
       non-secure-port: ${PORT:2011}
       secure-port: 443
+  user: ${EUREKA_USER_NAME:user}
+  password: ${EUREKA_USER_CRED:default}
 
 feign:
   client:
