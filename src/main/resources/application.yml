@@ -26,8 +26,8 @@ eureka:
       defaultZone: https://${eureka.user}:${eureka.password}@${eureka.instance.hostname}:${server.port}/eureka
       non-secure-port: ${PORT:2011}
       secure-port: 443
-  user: ${EUREKA_USER_NAME:itachi}
-  password: ${EUREKA_USER_PASSWORD:default}
+  user: ${EUREKA_USER_NAME:user}
+  password: ${EUREKA_USER_CRED:default}
 
 feign:
   client:
