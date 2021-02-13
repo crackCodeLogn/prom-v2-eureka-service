@@ -8,8 +8,8 @@ spring:
         enabled: false
   security:
     user:
-      name: itachi
-      password: default
+      name: ${SPRING_SECURITY_USERNAME:user}
+      password: ${SPRING_SECURITY_CRED:default}
 
 server:
   port: ${PORT:2011} #Heroku will supply it's own value here
