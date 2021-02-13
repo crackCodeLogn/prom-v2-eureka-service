@@ -1,27 +1,33 @@
 spring:
   application:
-    name: prom-eureka-service
+    name: prom-v2-eureka-service
     heroku: ${spring.application.name}.herokuapp.com
   cloud:
     loadbalancer:
       ribbon:
         enabled: false
+  security:
+    user:
+      name: ${SPRING_SECURITY_USERNAME:user}
+      password: ${SPRING_SECURITY_CRED:default}
 
 server:
   port: ${PORT:2011} #Heroku will supply it's own value here
 
 eureka:
   instance:
-    hostname: ${EUREKA_HOSTNAME:localhost} #EUREKA_HOSTNAME var set to => prom-eureka-service.herokuapp.com on herkou dashboard
+    hostname: ${EUREKA_HOSTNAME:localhost} #EUREKA_HOSTNAME var set to => prom-v2-eureka-service.herokuapp.com on herkou dashboard
   client:
     registerWithEureka: false
     fetchRegistry: false
     server:
       waitTimeInMsWhenSyncEmpty: 0
     service-url:
-      defaultZone: https://${eureka.instance.hostname}:${server.port}/eureka
+      defaultZone: https://${eureka.user}:${eureka.password}@${eureka.instance.hostname}:${server.port}/eureka
       non-secure-port: ${PORT:2011}
       secure-port: 443
+  user: ${EUREKA_USER_NAME:user}
+  password: ${EUREKA_USER_CRED:default}
 
 feign:
   client:

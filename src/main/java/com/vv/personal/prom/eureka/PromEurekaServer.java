@@ -7,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
@@ -18,14 +17,17 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Objects;
 
 import static com.vv.personal.prom.eureka.constants.Constants.*;
 
-@SpringBootApplication
 @EnableEurekaServer
-@EnableFeignClients
+@SpringBootApplication
 public class PromEurekaServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(PromEurekaServer.class);
+
+    @Autowired
+    private Environment environment;
 
     public static void main(String[] args) {
         SpringApplication.run(PromEurekaServer.class, args);
@@ -44,9 +46,6 @@ public class PromEurekaServer {
                 .build();
     }
 
-    @Autowired
-    private Environment environment;
-
     @EventListener(ApplicationReadyEvent.class)
     public void firedUpAllCylinders() {
         String host = LOCALHOST;
@@ -57,7 +56,8 @@ public class PromEurekaServer {
         }
         String port = environment.getProperty(LOCAL_SPRING_PORT);
         String herokuHost = environment.getProperty(SPRING_APPLICATION_HEROKU);
-        LOGGER.info("Eureka service is up now! Expected Heroku Swagger running on: {}, exact url: {}",
+        LOGGER.info("'{}' is up now! Expected Heroku Swagger running on: {}, exact url: {}",
+                Objects.requireNonNull(environment.getProperty("spring.application.name")).toUpperCase(),
                 String.format(HEROKU_SWAGGER_UI_URL, herokuHost),
                 String.format(SWAGGER_UI_URL, host, port));
         LOGGER.info("Expected Heroku eureka page running on: {}, exact url: {}",

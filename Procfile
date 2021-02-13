@@ -1,1 +1,1 @@
-web: java -jar target/prom-eureka-service-0.0.1-SNAPSHOT.jar
+web: java -jar target/prom-v2-eureka-service-0.0.1-SNAPSHOT.jar
